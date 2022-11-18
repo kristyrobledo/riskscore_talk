@@ -1,0 +1,152 @@
+---
+title: "Statosphere: Diabetes Risk score"
+output:
+  xaringan::moon_reader:
+    css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
+    self_contained: false # if true, fonts will be stored locally
+    seal: false # show a title slide with YAML information
+    includes:
+      in_header: "assets/mathjax-equation-numbers.html"
+    nature:
+      beforeInit: ["assets/remark-zoom.js", "https://platform.twitter.com/widgets.js"]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9' # alternatives '16:9' or '4:3' or others e.g. 13:9
+      navigation:
+        scroll: false # disable slide transitions by scrolling
+---
+
+```{r, load_refs, echo=FALSE, cache=FALSE, message=FALSE}
+library(RefManageR)
+library(icons)
+library(readxl)
+library(tidyverse)
+library(patchwork)
+library(DT)
+
+knitr::opts_chunk$set(
+  fig.asp = 9/16,
+  fig.align = 'center',
+  echo = F,
+  out.width = "95%",
+  dpi= 300)
+ 
+top_icon = function(x) {
+  icons::icon_style(
+    icons::fontawesome(x),
+    position = "fixed", top = 10, right = 10
+  )
+}
+```
+
+class: title-slide
+background-image: url("assets/title-image2.jpg")
+background-position:  100% 50%
+background-size: 100% 100%
+
+# .text-shadow[.black[Test]]
+<br><br><br><br><br><br><br><br><br>
+### .text-shadow[.white[<br><br><br> &nbsp;Dr Kristy Robledo <br> `r icon_style(fontawesome("twitter"), fill="blue")` @kristyrobledo]]
+
+---
+class: sydney-blue
+
+# Overview `r top_icon("list")`
+
+.font160[
+- what is PD-L1?
+- how is it measured?
+- how reliable are the measurements?
+- methods to classify "high" vs "low" expression
+- what has been performed to date in EC?
+]
+ 
+???
+inter-observer reliability of PD-L1
+
+---
+background-image: url("assets/pdl1.jpg")
+background-position:  100% 50%
+background-size: 100% 100%
+
+
+.footnote[
+Courtesy: [cancer.gov](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/immune-checkpoint-inhibitor)
+]
+
+???
+A protein that acts as a kind of “brake” to keep the body’s immune responses under control. PD-L1 may be found on some normal cells and in higher-than-normal amounts on some types of cancer cells. When PD-L1 binds to another protein called PD-1 (a protein found on T cells), it keeps T cells from killing the PD-L1-containing cells, including the cancer cells (left panel). 
+
+Anticancer drugs called immune checkpoint inhibitors bind to PD-L1 and block its binding to PD-1. This releases the “brakes” on the immune system and leaves T cells free to kill cancer cells (right panel).
+
+
+---
+
+background-image: url("assets/figassays2020.JPG")
+background-position:  100% 50%
+background-size: 100% 100%
+
+.footnote[
+Twomey, J.D., Zhang, B. Cancer Immunotherapy Update: FDA-Approved Checkpoint Inhibitors and Companion Diagnostics. AAPS J 23, 39 (2021). [https://doi.org/10.1208/s12248-021-00574-0](https://doi.org/10.1208/s12248-021-00574-0)
+]
+
+???
+
+FDA approvals of PD-1/PD-L1. 
+- As of December 2020, six anti-PD-1/PD-L1 mAbs have been approved with supplemental indications across 19 cancer types and two tissue-agnostic conditions. 
+- Shown are the approvals for each cancer indication, for Keytruda (pembrolizumab), Opdivo (nivolumab), Libtayo (cemiplimab), Tecentriq (atezolizumab), Bavencio (avelumab), and Imfinzi (durvalumab). 
+- Multiple approvals for a cancer indication within the same year are shown with only one symbol. The open symbols represent approvals without a biomarker (no BM). 
+- The full symbols represent approvals that incorporate a biomarker with an associated threshold for each indication (BM), which was measured using either a central laboratory test or complementary diagnostic that was not approved as a CDx for the drug. 
+- Symbols with a red outline represent approvals in which a companion diagnostic is indicated for biomarker measurement (BM + CDx). *: approval for MSI-H/dMMR colorectal cancer. PM, pleural mesothelioma; TNBC, triple-negative breast cancer; CSCC, cutaneous squamous cell carcinoma; TMB-H, tumor mutation burden high; CRC, colorectal cancer; BCG-BC, Bacillus Calmette-Guérin bladder cancer; EC, endometrial carcinoma; ESCC, esophageal squamous cell carcinoma; SCLC, small cell lung cancer; RCC, renal cell carcinoma; MCC, Merkel cell carcinoma; HCC, hepatocellular carcinoma; PMBCL, primary mediastinal large B cell lymphoma; CC, cervical cancer; GC, gastric cancer; MSI-H, microsatellite instability high; dMMR, mismatch repair-deficient; UC, urothelial carcinoma; cHL, classical Hodgkin’s lymphoma; HNSCC, head and neck squamous cell carcinoma; NSCLC, non-small cell lung cancer. Information on approvals and supplemental approvals was gathered from Drugs@FDA
+
+- In lung cancer, the 4 primary immune checkpoint inhibitors each have a different assay 
+- agreement between these assays ranges from poor to high
+
+
+---
+background-image: url("assets/pdl1_criteria.JPG")
+background-position:  50% 50%
+background-size: 60% 100%
+
+
+.footnote[
+Twomey, J.D., Zhang, B. Cancer Immunotherapy Update: FDA-Approved Checkpoint Inhibitors and Companion Diagnostics. AAPS J 23, 39 (2021). [https://doi.org/10.1208/s12248-021-00574-0](https://doi.org/10.1208/s12248-021-00574-0)
+]
+
+???
+companion diagnostic device is required for the therapeutic product’s safe and effective use, a complementary test is performed to provide information that is clinically meaningful and will aid in the decision regarding treatment
+
+
+
+---
+class: sydney-red
+background-image: url(assets/USydLogo-white.svg),url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
+background-size: 260px,100px
+background-position: 5% 95%,4% 70%
+
+# Thanks!
+
+.pull-right[.pull-down[
+
+<a href="mailto:kristy.robledo@sydney.edu.au">
+.white[`r icons::fontawesome("paper-plane")` kristy.robledo@sydney.edu.au]
+</a>
+
+<a href="https://kristyrobledo.github.io/GCIG-EC/">
+.white[`r icons::fontawesome("link")` kristyrobledo.github.io/GCIG-EC/]
+</a>
+
+<a href="http://twitter.com/kristyrobledo">
+.white[`r icons::fontawesome("twitter")` @kristyrobledo]
+</a>
+
+<a href="http://github.com/kristyrobledo">
+.white[`r icons::fontawesome("github")` @kristyrobledo]
+</a>
+
+<br><br><br>
+]]
+
+???
+sharingan
