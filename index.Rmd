@@ -219,7 +219,7 @@ extend45 - 0.806 (95% CI: 0.735-0.877).
 # .brand-red[Step three: Model performance (.bold[Calibration])]
 
 .center[
-  <img src="assets/Calibration.png" height=600>
+  <img src="assets/calibration.png" height=600>
 ]
 
 
@@ -238,7 +238,7 @@ The calibration according to the Hosmer-Lemeshow goodness of fit test was poor (
 
 .center[
 <br>
-  <img src="assets/Recalibration.png" height=520>
+  <img src="assets/recalibration.png" height=520>
 ]
 
 ???
