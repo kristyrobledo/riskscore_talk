@@ -293,8 +293,8 @@ background-position: 5% 95%,4% 70%
 .white[`r icons::fontawesome("paper-plane")` kristy.robledo@sydney.edu.au]
 </a>
 
-<a href="https://kristyrobledo.github.io/GCIG-EC/">
-.white[`r icons::fontawesome("link")` kristyrobledo.github.io/GCIG-EC/]
+<a href="https://kristyrobledo.github.io/riskscore_talk/">
+.white[`r icons::fontawesome("link")` kristyrobledo.github.io/riskscore_talk/]
 </a>
 
 <a href="http://twitter.com/kristyrobledo">
