@@ -5,6 +5,10 @@
     <meta charset="utf-8" />
     <script src="index_files/header-attrs-2.18/header-attrs.js"></script>
     <link href="index_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <script src="index_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="index_files/viz-1.8.2/viz.js"></script>
+    <link href="index_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+    <script src="index_files/grViz-binding-1.0.9/grViz.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         TeX: { equationNumbers: { autoNumber: "AMS" } },
@@ -31,79 +35,198 @@ background-image: url("assets/title-image2.jpg")
 background-position:  100% 50%
 background-size: 100% 100%
 
-# .text-shadow[.black[Test]]
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+# .text-shadow[.black[Predicting diabetes in Australian males at high risk]]
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 ### .text-shadow[.white[&lt;br&gt;&lt;br&gt;&lt;br&gt; &amp;nbsp;Dr Kristy Robledo &lt;br&gt; &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;fill:blue;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"&gt;&lt;/path&gt;&lt;/svg&gt; @kristyrobledo]]
+---
 
+.pull-left-1[
+  .center[
+&lt;img src="assets/Diabetes-infographic-part1.jpg" height=630&gt;
+]
+]
+
+--
+.pull-right-2[
+
+  .center[
+&lt;img src="assets/riskscore.JPG" height=450&gt;
+]
+
+
+.font60[
+Courtesy: [World health Organisation](https://www.who.int/news-room/fact-sheets/detail/diabetes) and
+
+Diabetes Australia Risk score calculator developed by Baker IDI Heart Diabetes Institute. [https://www.diabetesaustralia.com.au/risk-calculator/](https://www.diabetesaustralia.com.au/risk-calculator/)
+]
+]
+
+
+
+???
+
+---
+
+# .brand-red[Development cohort: T4DM trial]
+
+.pull-left-1[
+
+.content-box-yellow[
+
+- males aged 50 to 74 years, 
+- waist circumference ≥95 cm, 
+- impaired glucose tolerance or newly diagnosed type 2 diabetes,
+- fasting testosterone ≤14 nmol/L
+
+]
+&lt;br&gt;
+
+.content-box-grey[
+.blue[**Primary outcome:**] Diabetes at two years, as measured by 2-hour glucose by OGTT `\(\ge\)` 11.1mmol/L
+]
+]
+--
+
+.pull-right-2[
+ .center[
+  &lt;img src="assets/short_flow.png" height=500&gt;
+]
+
+]
+
+.footnote[
+Wittert G, Bracken K, Robledo KP, et al. Testosterone treatment to prevent or revert type 2 diabetes in men enrolled in a lifestyle programme (T4DM): A randomised, double-blind, placebo-controlled, 2-year, phase 3b trial. The Lancet Diabetes &amp; Endocrinology 2021;9:32–45. [https://doi.org/10.1016/S2213-8587(20)30367-3](https://doi.org/10.1016/S2213-8587(20)30367-3)
+]
+---
+class: center
+
+
+
+background-image: url("wordcloud.png")
+background-position:  50% 50%
+background-size: 90% 90%
+
+# .brand-red[35 risk factors]
+
+---
+
+# .brand-red[Step one: select risk factors + fit model]
+
+.pull-left-1[
+.content-box-yellow[
+- LASSO penalisation.fn[1] using 469 with complete data
+- 10 fold cross validation was used to maximise AUC
+- dotted line denotes max AUC, with two non-zero covariates selected in the model (HbA1c and 2-hour glucose)
+- refit without penalisation, with AUC **0.809** (n= 665 patients)
+- including T treatment.fn[2], AUC **0.816**.
+]
+]
+
+.pull-right-2[
+.center[
+  &lt;img src="assets/lasso_cv.png" height=500&gt;
+]
+]
+
+.footnote[
+1. Zhao S, Daniela Witten, Ali Shojaie "In Defense of the Indefensible: A Very Naïve Approach to High-Dimensional Inference," Statistical Science. 36(4), 562-577, (November 2021) [https://doi.org/10.1214/20-STS815](https://doi.org/10.1214/20-STS815)
+1. **T treatment was associated with 40% reduction in diabetes at two years**
+]
+
+
+
+???
+Least absolute shrinkage and selection operator (LASSO) penalisation was performed to select risk factors, prevent over-fitting, and reduce the dimensions of the prediction model [12]. To determine the penalty factor (λ), tenfold cross validation was performed, to maximise the area under the curve (AUC).
+
+---
+
+# .brand-red[Step two: Validation]
+
+.pull-left[
+.content-box-yellow[
+.font120[
+- EXTEND45 cohort of 267,357 participants aged 45 and up
+- conduct approved by the University of New South Wales HREC
+- baseline questionnaires collected Jan 2006 - Dec 2009
+- lab data linked up to July 2013
+]
+]
+]
+--
+
+.pull-right[
+<div id="htmlwidget-2859764fc63711daf5b9" style="width:95%;height:500px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2859764fc63711daf5b9">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = rectangle]        \n  rec1 [label = \"HbA1c and 2-hour glucose within 6 months (baseline, n=2026)\"]\n  rec2 [label = \"baseline 2-hour glucose <11.1mmol/L & HbA1c<6.5 (n=1189)\"]\n  rec3 [label =  \"outcome 2-hour glucose identified 1-4yr post baseline (n=452)\"]\n  rec4 [label = \"restrict to males (n=221)\"]\n  \n  # edge definitions with the node IDs\n  rec1 -> rec2 -> rec3 -> rec4\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+]
+
+---
+
+# .brand-red[Step three: Model performance (.bold[Discrimination])]
+
+.center[
+  &lt;img src="assets/ROC.png" height=540&gt;
+]
+
+???
+T4DM AUC 0.820 (95% CI: 0.762-0.877) model has high discriminating ability.
+extend45 - 0.806 (95% CI: 0.735-0.877). 
+
+---
+# .brand-red[Step three: Model performance (.bold[Calibration])]
+
+.center[
+  &lt;img src="assets/Calibration.png" height=600&gt;
+]
+
+
+???
+Risk groups: 25%, middle 50%, top 25% of risk
+A comparison of the predicted probability versus the observed probability for each risk group is shown in Figure, demonstrating that there is a higher probability observed than predicted in the model validation cohort.
+
+Calibration - T4DM
+The Brier score was low at 0.07, the Hosmer–Lemeshow χ^2 statistic was 3.92, (p=0.86), and the p-value for the Osius-Rojek and Stukel tests were 0.71 and 0.04 respectively, indicating good calibration within the model development cohort, other than the Stukel test.
+
+Extend45
+The calibration according to the Hosmer-Lemeshow goodness of fit test was poor (χ^2=106, p&lt;0.001). However the Brier score for assessing prediction accuracy was low at 0.13 and the p-value for the Stukel test was 0.62, indicating a good fit, while the p-value for the Osius-Rojek test was p&lt;0.001. 
+
+---
+# .brand-red[Step four: Model performance (.bold[Recalibration])]
+
+.center[
+&lt;br&gt;
+  &lt;img src="assets/Recalibration.png" height=520&gt;
+]
+
+???
+Given this under-prediction, recalibration in the large was performed and the intercept was estimated as 0.67. Once this was taken into account, the predicted probabilities from the model showed better alignment with the observed probabilities 
 ---
 class: sydney-blue
 
-# Overview &lt;svg viewBox="0 0 512 512" style="height:1em;display:inline-block;position:fixed;top:10;right:10;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M80 368H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm0-320H16A16 16 0 0 0 0 64v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16zm0 160H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm416 176H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"&gt;&lt;/path&gt;&lt;/svg&gt;
+# **Take home messages**
 
-.font160[
-- what is PD-L1?
-- how is it measured?
-- how reliable are the measurements?
-- methods to classify "high" vs "low" expression
-- what has been performed to date in EC?
+.font130[
+- Risk score has been developed for Australian high risk men
 ]
- 
-???
-inter-observer reliability of PD-L1
-
----
-background-image: url("assets/pdl1.jpg")
-background-position:  100% 50%
-background-size: 100% 100%
-
-
-.footnote[
-Courtesy: [cancer.gov](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/immune-checkpoint-inhibitor)
+--
+.font130[
+- 2-hour glucose by OGTT and Hb1ac are important risk factors
 ]
-
-???
-A protein that acts as a kind of “brake” to keep the body’s immune responses under control. PD-L1 may be found on some normal cells and in higher-than-normal amounts on some types of cancer cells. When PD-L1 binds to another protein called PD-1 (a protein found on T cells), it keeps T cells from killing the PD-L1-containing cells, including the cancer cells (left panel). 
-
-Anticancer drugs called immune checkpoint inhibitors bind to PD-L1 and block its binding to PD-1. This releases the “brakes” on the immune system and leaves T cells free to kill cancer cells (right panel).
-
-
----
-
-background-image: url("assets/figassays2020.JPG")
-background-position:  100% 50%
-background-size: 100% 100%
-
-.footnote[
-Twomey, J.D., Zhang, B. Cancer Immunotherapy Update: FDA-Approved Checkpoint Inhibitors and Companion Diagnostics. AAPS J 23, 39 (2021). [https://doi.org/10.1208/s12248-021-00574-0](https://doi.org/10.1208/s12248-021-00574-0)
+--
+.font130[
+- calibration in an opportunistic validation cohort gave some underestimation of risk (probably due to lifestyle component of T4DM)
+]
+--
+.font130[
+- high risk men not developing diabetes is likely due to changes in body composition over the trial
+]
+--
+.font130[
+- Future work: Shiny app for calculation of risk groups and **Publication**
 ]
 
 ???
-
-FDA approvals of PD-1/PD-L1. 
-- As of December 2020, six anti-PD-1/PD-L1 mAbs have been approved with supplemental indications across 19 cancer types and two tissue-agnostic conditions. 
-- Shown are the approvals for each cancer indication, for Keytruda (pembrolizumab), Opdivo (nivolumab), Libtayo (cemiplimab), Tecentriq (atezolizumab), Bavencio (avelumab), and Imfinzi (durvalumab). 
-- Multiple approvals for a cancer indication within the same year are shown with only one symbol. The open symbols represent approvals without a biomarker (no BM). 
-- The full symbols represent approvals that incorporate a biomarker with an associated threshold for each indication (BM), which was measured using either a central laboratory test or complementary diagnostic that was not approved as a CDx for the drug. 
-- Symbols with a red outline represent approvals in which a companion diagnostic is indicated for biomarker measurement (BM + CDx). *: approval for MSI-H/dMMR colorectal cancer. PM, pleural mesothelioma; TNBC, triple-negative breast cancer; CSCC, cutaneous squamous cell carcinoma; TMB-H, tumor mutation burden high; CRC, colorectal cancer; BCG-BC, Bacillus Calmette-Guérin bladder cancer; EC, endometrial carcinoma; ESCC, esophageal squamous cell carcinoma; SCLC, small cell lung cancer; RCC, renal cell carcinoma; MCC, Merkel cell carcinoma; HCC, hepatocellular carcinoma; PMBCL, primary mediastinal large B cell lymphoma; CC, cervical cancer; GC, gastric cancer; MSI-H, microsatellite instability high; dMMR, mismatch repair-deficient; UC, urothelial carcinoma; cHL, classical Hodgkin’s lymphoma; HNSCC, head and neck squamous cell carcinoma; NSCLC, non-small cell lung cancer. Information on approvals and supplemental approvals was gathered from Drugs@FDA
-
-- In lung cancer, the 4 primary immune checkpoint inhibitors each have a different assay 
-- agreement between these assays ranges from poor to high
-
-
----
-background-image: url("assets/pdl1_criteria.JPG")
-background-position:  50% 50%
-background-size: 60% 100%
-
-
-.footnote[
-Twomey, J.D., Zhang, B. Cancer Immunotherapy Update: FDA-Approved Checkpoint Inhibitors and Companion Diagnostics. AAPS J 23, 39 (2021). [https://doi.org/10.1208/s12248-021-00574-0](https://doi.org/10.1208/s12248-021-00574-0)
-]
-
-???
-companion diagnostic device is required for the therapeutic product’s safe and effective use, a complementary test is performed to provide information that is clinically meaningful and will aid in the decision regarding treatment
-
-
+OGTT is not a fun test
 
 ---
 class: sydney-red
@@ -113,7 +236,15 @@ background-position: 5% 95%,4% 70%
 
 # Thanks!
 
-.pull-right[.pull-down[
+.pull-right-2[
+.pull-up[
+- Centre for Health Record Linkage (CHeReL), [http://www.cherel.org.au/](http://www.cherel.org.au/) for data linkage
+- Secure Unified Research Environment (SURE) for provision of secure data access
+- Participants of the T4DM trial and EXTEND45 cohort study
+- co-authors, particularly Prof Gary Wittert and Prof Ian Marschner 
+]
+
+.pull-down[
 
 &lt;a href="mailto:kristy.robledo@sydney.edu.au"&gt;
 .white[&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M440 6.5L24 246.4c-34.4 19.9-31.1 70.8 5.7 85.9L144 379.6V464c0 46.4 59.2 65.5 86.6 28.6l43.8-59.1 111.9 46.2c5.9 2.4 12.1 3.6 18.3 3.6 8.2 0 16.3-2.1 23.6-6.2 12.8-7.2 21.6-20 23.9-34.5l59.4-387.2c6.1-40.1-36.9-68.8-71.5-48.9zM192 464v-64.6l36.6 15.1L192 464zm212.6-28.7l-153.8-63.5L391 169.5c10.7-15.5-9.5-33.5-23.7-21.2L155.8 332.6 48 288 464 48l-59.4 387.3z"&gt;&lt;/path&gt;&lt;/svg&gt; kristy.robledo@sydney.edu.au]
@@ -131,11 +262,44 @@ background-position: 5% 95%,4% 70%
 .white[&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; @kristyrobledo]
 &lt;/a&gt;
 
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
 ]]
 
 ???
 sharingan
+---
+class: sydney-yellow
+
+# Extras:  checks and more checks 
+
+1. check relationships of continuous data and outcome
+
+--
+
+2. Account for missing data by assuming missing outcome is no diabetes
+
+--
+
+3. Check for inclusion of any non-zero covariates :
+
+  - Best addition of age gave AUC .bold[0.830] (minor increase from 0.816)
+
+--
+
+3. Check for interactions
+
+--
+
+.center[
+.content-box-grey[
+
+BINGO: HbA1c and treatment
+
+]
+]
+
+???
+Given that 469 participants had all risk factors and outcome data available, a sensitivity analysis was performed assuming all patients with missing outcome data were not diabetic at two years. This gave a total of 539 patients available to perform logistic regression with LASSO (extra 70 patients) to identify the optimal λ and therefore the optimum risk factors in the model (step one). The previous model of HbA1c and 2-hour glucose by OGTT was within one standard error of the optimal λ, which is considered the most parsimonious model with the consideration of many risk factors (reference). 
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
