@@ -94,6 +94,11 @@ Diabetes Australia Risk score calculator developed by Baker IDI Heart Diabetes I
 .blue[**Primary outcome:**] Diabetes at two years, as measured by 2-hour glucose by OGTT $\ge$ 11.1mmol/L
 ]
 ]
+???
+Prognostic model development: 807 males without baseline diabetes randomised to placebo or testosterone treatment in the T4DM study
+
+Diabetes at two years, defined as 2-hour fasting glucose by oral glucose tolerance test (OGTT) greater than or equal to 11.1mmol/L.
+
 --
 
 .pull-right-2[
