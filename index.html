@@ -127,6 +127,8 @@ background-size: 90% 90%
 ]
 ]
 
+--
+
 .pull-right-2[
 .center[
   &lt;img src="assets/lasso_cv.png" height=500&gt;
@@ -160,8 +162,8 @@ Least absolute shrinkage and selection operator (LASSO) penalisation was perform
 --
 
 .pull-right[
-<div id="htmlwidget-c0444eb54930dae64a3c" style="width:95%;height:500px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c0444eb54930dae64a3c">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = rectangle]        \n  rec1 [label = \"HbA1c and 2-hour glucose within 6 months (baseline, n=2026)\"]\n  rec2 [label = \"baseline 2-hour glucose <11.1mmol/L & HbA1c<6.5 (n=1189)\"]\n  rec3 [label =  \"outcome 2-hour glucose identified 1-4yr post baseline (n=452)\"]\n  rec4 [label = \"restrict to males (n=221)\"]\n  \n  # edge definitions with the node IDs\n  rec1 -> rec2 -> rec3 -> rec4\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3c83a818a4240f123a46" style="width:95%;height:500px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3c83a818a4240f123a46">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = rectangle]        \n  rec1 [label = \"HbA1c and 2-hour glucose within 6 months (baseline, n=2026)\"]\n  rec2 [label = \"baseline 2-hour glucose <11.1mmol/L & HbA1c<6.5 (n=1189)\"]\n  rec3 [label =  \"outcome 2-hour glucose identified 1-4yr post baseline (n=452)\"]\n  rec4 [label = \"restrict to males (n=221)\"]\n  \n  # edge definitions with the node IDs\n  rec1 -> rec2 -> rec3 -> rec4\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ]
 
@@ -174,16 +176,21 @@ Least absolute shrinkage and selection operator (LASSO) penalisation was perform
 ]
 
 ???
-T4DM AUC 0.820 (95% CI: 0.762-0.877) model has high discriminating ability.
+Discrimination- separate individuals who develop events from those who do not
+ 
+ T4DM AUC 0.820 (95% CI: 0.762-0.877) model has high discriminating ability.
 extend45 - 0.806 (95% CI: 0.735-0.877). 
 
 ---
 # .brand-red[Step three: Model performance (.bold[Calibration])]
 
-.center[
-  &lt;img src="assets/calibration.png" height=600&gt;
+.pull-left[
+  &lt;img src="assets/cal_dev.png" height=540&gt;
 ]
-
+--
+.pull-right[
+  &lt;img src="assets/cal_v.png" height=540&gt;
+]
 
 ???
 Risk groups: 25%, middle 50%, top 25% of risk
@@ -195,6 +202,8 @@ The Brier score was low at 0.07, the Hosmer–Lemeshow χ^2 statistic was 3.92, 
 Extend45
 The calibration according to the Hosmer-Lemeshow goodness of fit test was poor (χ^2=106, p&lt;0.001). However the Brier score for assessing prediction accuracy was low at 0.13 and the p-value for the Stukel test was 0.62, indicating a good fit, while the p-value for the Osius-Rojek test was p&lt;0.001. 
 
+
+Calibration measures how accurately the model’s predictions match overall observed event rates.
 ---
 # .brand-red[Step four: Model performance (.bold[Recalibration])]
 
@@ -215,7 +224,7 @@ class: sydney-blue
 ]
 --
 .font130[
-- 2-hour glucose by OGTT and Hb1ac are important risk factors
+- 2-hour glucose by OGTT and HbA1c are important risk factors
 ]
 --
 .font130[
@@ -223,11 +232,8 @@ class: sydney-blue
 ]
 --
 .font130[
-- high risk men not developing diabetes is likely due to changes in body composition over the trial
-]
---
-.font130[
-- Future work: Shiny app for calculation of risk groups and **Publication**
+- Future work: Nonogram &amp; shiny app for calculation of risk groups 
+- **Publication**
 ]
 
 ???
